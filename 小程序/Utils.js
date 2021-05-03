@@ -65,6 +65,27 @@ export class UtilsString extends Utils {
     if (type == 2) dateResult += `${year}年${month}月${day}日  ${timeResult}`;
     return dateResult.trim();
   }
+
+  /**
+   * 传入两个时间戳 返回两个时间戳之间剩余的小时、分钟、秒 ，余数将向下取整
+   * @param start {Number} 开始时间的时间戳
+   * @param end {Number} 结束时间的时间戳
+   * @param type {Number} 非必填 默认返回数组 1 为 00:00:00 格式时间 2 为 00时00分00秒格式
+   *   */
+  static calcEndDate(start, end, type) {
+      const result = end - start;
+      if (result <= 0) return 0;
+      const MyDate = new Date(result);
+      let hour = Math.floor(result / 3600000);
+      hour = hour < 10 ? `0${hour}` : hour;
+      let minute = MyDate.getMinutes();
+      minute = minute < 10 ? `0${minute}` : minute;
+      let second = MyDate.getSeconds();
+      second = second < 10 ? `0${second}` : second;
+      if (type === 1) return `${hour}:${minute}:${second}`;
+      if (type === 2) return `${hour}时${minute}分${second}秒`
+      return [hour, minute, second];
+  }
 }
 
 // 函数操作类
@@ -247,5 +268,33 @@ export class WxApi extends Utils {
         })
         .exec();
     });
+  }
+
+  /**
+   * 显示wx.showLoading加载
+   * @param text {String} 显示的文本内容 不传值则为关闭loading提示
+   * @param mask {Boolean} 是否关闭触摸穿透 默认false
+   */
+  static loading(text = '', mask = false) {
+      if (text === '') {
+          wx.hideLoading()
+          return;
+      }
+      const params = {
+          title: text,
+          mask
+      };
+      wx.showLoading(params);
+  }
+
+  /**
+   * 使用storage保存内容（同步）
+   * @param key { String } 设置键名
+   * @param value {any} 设置值
+   * @param type { Boolean } 默认false 传入true将使用JSON.stringify转化为字符串
+   */
+  static storage(key, value, type = false) {
+      if (type) value = JSON.stringify(value);
+      wx.setStorageSync(key, value);
   }
 }
