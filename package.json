@@ -1,0 +1,22 @@
+{
+  "name": "front-end-js-utils",
+  "version": "1.0.0",
+  "description": "front end Utils",
+  "main": "./JS/Utils.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/newz-max/front-end-JS-utils.git"
+  },
+  "keywords": [
+    "frontutils"
+  ],
+  "author": "xiaozhi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/newz-max/front-end-JS-utils/issues"
+  },
+  "homepage": "https://github.com/newz-max/front-end-JS-utils#readme"
+}
