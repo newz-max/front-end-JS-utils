@@ -3,4 +3,3 @@
   - `npm i front-end-js-utils`
 - **yarn**
   - `yarn add front-end-js-utils`
-
