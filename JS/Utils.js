@@ -149,7 +149,9 @@ export class UtilsFun extends Utils {
   }
 }
 
-// 简化JSApi
+/**
+* 简化javaScript一些API的使用  
+*/
 export class Japi extends Utils{
   constructor(){
     super();
@@ -175,5 +177,19 @@ export class Japi extends Utils{
     let result = localStorage.getItem(key); 
     if( JSONParse ) result = JSON.parse(result);
     return result;
+  }
+
+  /**
+   * 简化Object.property.toString.call()的使用
+  * @param {any} data 传入任意类型数据，返回对应类型
+  * @param {Boolean} whole 默认false，返回字符串截取过的结果，传入true，返回toString的正常结果 
+  * @returns {String} 默认返回数据对应类型字符串 实例：Array
+  */
+  static getDataType(data , whole=false){
+    const jsType = Object.prototype.toString.call(data);
+    if( whole ) return jsType;
+    const {length} = jsType;
+    const type = jsType.slice(8 , length-1);
+    return type;
   }
 }
