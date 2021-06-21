@@ -147,6 +147,40 @@ export class UtilsFun extends Utils {
       throw e;
     }
   }
+
+  /**
+  * 经纬度编码，度转换为度分秒,南北纬东西经的判断基于传入数值的正负值，北纬及东经为正数，反之亦然
+  * @param {{lat : 00.00000000 , lng : 00.000000 }} latlng 传入经纬度对象
+  * @returns {{lat : 'xxx' , lng : 'xxx'}} 返回编码后的经纬度对象 
+  */
+  static encodeLatlng(latlng){
+    const { lat , lng } = latlng;
+
+    // 判断南北纬和东西经
+    const direction = {
+      lat : 'N', // 北纬
+      lng : 'E', // 东经
+    };
+    if( lat < 0 ) direction.lat = 'S'; // 南纬
+    if( lng < 0 ) direction.lng = 'W'; // 西经
+    // 得到度
+    const la = Math.floor(lat);
+    const ln = Math.floor(lng);
+    // 计算分的包含小数结果
+    const laTemp = (lat - la) * 60;
+    const lnTemp = (lng - ln) * 60;
+    // 得到分
+    const laMinutes = Math.floor(laTemp);
+    const lnMinutes = Math.floor(lnTemp);
+    // 得到秒
+    const laSeconds = Math.floor((laTemp - laMinutes) * 60);
+    const lnSeconds = Math.floor((lnTemp - lnMinutes) * 60);
+    const result = {
+      lat : `${la}°${laMinutes}.${laSeconds}' ${direction.lat}`,
+      lng : `${la}°${lnMinutes}.${lnSeconds}' ${direction.lng}`,
+    }
+    return result;
+  }
 }
 
 /**
