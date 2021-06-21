@@ -92,7 +92,7 @@ export class UtilsString extends Utils {
 }
 
 // 函数操作类
-export class UtilsFun extends Utils {
+export class Fun extends Utils {
   constructor() {
     super();
   }
