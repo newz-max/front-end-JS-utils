@@ -6,7 +6,7 @@ class Utils {
 }
 
 // 字符串操作类
-export class UtilsString extends Utils {
+export class Ustr extends Utils {
   constructor() {
     super();
   }
