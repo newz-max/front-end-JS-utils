@@ -227,3 +227,10 @@ export class Japi extends Utils{
     return type;
   }
 }
+
+export default{
+  Utils,
+  Ustr,
+  Fun,
+  Japi,
+}
