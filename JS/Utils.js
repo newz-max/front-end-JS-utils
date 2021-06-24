@@ -149,20 +149,24 @@ export class Fun extends Utils {
   }
 
   /**
-  * 经纬度编码，度转换为度分秒,南北纬东西经的判断基于传入数值的正负值，北纬及东经为正数，反之亦然
-  * @param {{lat : 00.00000000 , lng : 00.000000 }} latlng 传入经纬度对象
-  * @returns {{lat : 'xxx' , lng : 'xxx'}} 返回编码后的经纬度对象 
-  */
-  static encodeLatlng(latlng){
-    const { lat , lng } = latlng;
+   * 经纬度编码，度转换为度分秒,南北纬东西经的判断基于传入数值的正负值，北纬及东经为正数，反之亦然
+   * @param {{lat : 00.00000000 , lng : 00.000000 }} latlng 传入经纬度对象
+   * @param {Boolean} deCode 默认false 传入true返回无度数分秒拼接的对象 返回{lat : {deg : xxx , minutes : xxx , seconds} , lng : {xxx}}
+   * @returns {{lat : 'xxx' , lng : 'xxx'}} 返回编码后的经纬度对象 
+   */
+  static encodeLatlng(latlng, deCode = false) {
+    const {
+      lat,
+      lng
+    } = latlng;
 
     // 判断南北纬和东西经
     const direction = {
-      lat : 'N', // 北纬
-      lng : 'E', // 东经
+      lat: 'N', // 北纬
+      lng: 'E', // 东经
     };
-    if( lat < 0 ) direction.lat = 'S'; // 南纬
-    if( lng < 0 ) direction.lng = 'W'; // 西经
+    if (lat < 0) direction.lat = 'S'; // 南纬
+    if (lng < 0) direction.lng = 'W'; // 西经
     // 得到度
     const la = Math.floor(lat);
     const ln = Math.floor(lng);
@@ -175,19 +179,36 @@ export class Fun extends Utils {
     // 得到秒
     const laSeconds = Math.floor((laTemp - laMinutes) * 60);
     const lnSeconds = Math.floor((lnTemp - lnMinutes) * 60);
-    const result = {
-      lat : `${la}°${laMinutes}.${laSeconds}' ${direction.lat}`,
-      lng : `${la}°${lnMinutes}.${lnSeconds}' ${direction.lng}`,
+    let result;
+    if (deCode) {
+      result = {
+        lat: {
+          deg: la,
+          minutes: laMinutes,
+          seconds: laSeconds,
+        },
+        lng: {
+          deg: ln,
+          minutes: lnMinutes,
+          seconds: lnSeconds,
+        }
+      }
+    }
+    if(!decode){
+      result = {
+        lat: `${la}°${laMinutes}.${laSeconds}' ${direction.lat}`,
+        lng: `${ln}°${lnMinutes}.${lnSeconds}' ${direction.lng}`,
+      }
     }
     return result;
   }
 }
 
 /**
-* 简化javaScript一些API的使用  
-*/
-export class Japi extends Utils{
-  constructor(){
+ * 简化javaScript一些API的使用  
+ */
+export class Japi extends Utils {
+  constructor() {
     super();
   }
 
@@ -196,10 +217,10 @@ export class Japi extends Utils{
    * @param key {any} 设置键名，非字符串会自动转换为字符串
    * @param value {any} 设置值，非字符串会自动转换为字符串
    */
-  static localSet(key , value){
-    if( typeof key !== 'string' ) key = JSON.stringify(key);
-    if( typeof value !== 'string' ) value = JSON.stringify(value); 
-    localStorage.setItem(key , value)
+  static localSet(key, value) {
+    if (typeof key !== 'string') key = JSON.stringify(key);
+    if (typeof value !== 'string') value = JSON.stringify(value);
+    localStorage.setItem(key, value)
   }
 
   /**
@@ -207,28 +228,30 @@ export class Japi extends Utils{
    * @param key {String} 要获取的storage键名
    * @param JSONParse { Boolean } 默认false 传入true将对返回数据使用JSON.parse
    */
-  static localGet( key , JSONParse=false ){
-    let result = localStorage.getItem(key); 
-    if( JSONParse ) result = JSON.parse(result);
+  static localGet(key, JSONParse = false) {
+    let result = localStorage.getItem(key);
+    if (JSONParse) result = JSON.parse(result);
     return result;
   }
 
   /**
    * 简化Object.property.toString.call()的使用
-  * @param {any} data 传入任意类型数据，返回对应类型
-  * @param {Boolean} whole 默认false，返回字符串截取过的结果，传入true，返回toString的正常结果 
-  * @returns {String} 默认返回数据对应类型字符串 实例：Array
-  */
-  static getDataType(data , whole=false){
+   * @param {any} data 传入任意类型数据，返回对应类型
+   * @param {Boolean} whole 默认false，返回字符串截取过的结果，传入true，返回toString的正常结果 
+   * @returns {String} 默认返回数据对应类型字符串 实例：Array
+   */
+  static getDataType(data, whole = false) {
     const jsType = Object.prototype.toString.call(data);
-    if( whole ) return jsType;
-    const {length} = jsType;
-    const type = jsType.slice(8 , length-1);
+    if (whole) return jsType;
+    const {
+      length
+    } = jsType;
+    const type = jsType.slice(8, length - 1);
     return type;
   }
 }
 
-export default{
+export default {
   Utils,
   Ustr,
   Fun,
