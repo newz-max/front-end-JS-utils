@@ -194,7 +194,7 @@ export class Fun extends Utils {
         }
       }
     }
-    if(!decode){
+    if(!deCode){
       result = {
         lat: `${la}°${laMinutes}.${laSeconds}' ${direction.lat}`,
         lng: `${ln}°${lnMinutes}.${lnSeconds}' ${direction.lng}`,
