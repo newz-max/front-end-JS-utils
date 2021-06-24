@@ -202,6 +202,21 @@ export class Fun extends Utils {
     }
     return result;
   }
+
+  /**
+  * 度分秒反算为度
+  * @param {[deg , minuite , second]} latlng 传入一个数组可以可以是度分或度分秒
+  * @returns {Number} 返回一个计算为度的数字
+  */
+ static decodeLatlng(latlng){
+  latlng.reverse();
+  const result = latlng.reduce( ( prev , current , index , self ) => {
+    if( index == self.length -1 ) return prev += current;
+    prev += current / 60;
+    return prev;
+  } , 0);
+  return result;
+ }
 }
 
 /**
