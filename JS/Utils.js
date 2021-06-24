@@ -16,6 +16,7 @@ export class Ustr extends Utils {
    * @param str string 要截取的文本
    * @param intercept string 用于查询开始索引的字符串
    * @param endIntercept string 用于查询结束索引的字符串
+   * @returns {[str , str , str]} 返回一个数组以每次截取到的内容为一个元素
    *   */
   static interceptStr(str, intercept, endIntercept, startIndex = 0, arr = []) {
     const index = str.indexOf(intercept, startIndex);
@@ -45,6 +46,7 @@ export class Ustr extends Utils {
    * @param timeStamp {Number} 要转换的时间戳
    * @param time {String} default:no no不返回时分秒 传入yes字符串返回时分秒
    * @param type {Number} default:1 1返回 xxxx-xx-xx格式 传入2返回xxxx年-xx月-xx日格式
+   * @returns {String} 返回一个字符串 格式为 Y-M-D H:M:S 或 Y年M月D日 H时:M分:S秒
    * */
   static calcDate(timeStamp, time = "no", type = "1") {
     const year = new Date(timeStamp).getFullYear();
@@ -174,11 +176,11 @@ export class Fun extends Utils {
     const laTemp = (lat - la) * 60;
     const lnTemp = (lng - ln) * 60;
     // 得到分
-    const laMinutes = Math.floor(laTemp);
-    const lnMinutes = Math.floor(lnTemp);
+    const laMinutes = Math.Fixed(laTemp);
+    const lnMinutes = Math.Fixed(lnTemp);
     // 得到秒
-    const laSeconds = Math.floor((laTemp - laMinutes) * 60);
-    const lnSeconds = Math.floor((lnTemp - lnMinutes) * 60);
+    const laSeconds = Math.Fixed((laTemp - laMinutes) * 60);
+    const lnSeconds = Math.Fixed((lnTemp - lnMinutes) * 60);
     let result;
     if (deCode) {
       result = {
