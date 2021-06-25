@@ -176,11 +176,11 @@ export class Fun extends Utils {
     const laTemp = (lat - la) * 60;
     const lnTemp = (lng - ln) * 60;
     // 得到分
-    const laMinutes = Math.Fixed(laTemp);
-    const lnMinutes = Math.Fixed(lnTemp);
+    const laMinutes = Math.Round(laTemp);
+    const lnMinutes = Math.Round(lnTemp);
     // 得到秒
-    const laSeconds = Math.Fixed((laTemp - laMinutes) * 60);
-    const lnSeconds = Math.Fixed((lnTemp - lnMinutes) * 60);
+    const laSeconds = Math.Round((laTemp - laMinutes) * 60);
+    const lnSeconds = Math.Round((lnTemp - lnMinutes) * 60);
     let result;
     if (deCode) {
       result = {
