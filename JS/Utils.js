@@ -196,7 +196,7 @@ export class Fun extends Utils {
         }
       }
     }
-    if(!deCode){
+    if (!deCode) {
       result = {
         lat: `${la}°${laMinutes}.${laSeconds}' ${direction.lat}`,
         lng: `${ln}°${lnMinutes}.${lnSeconds}' ${direction.lng}`,
@@ -206,19 +206,62 @@ export class Fun extends Utils {
   }
 
   /**
-  * 度分秒反算为度
-  * @param {[deg , minuite , second]} latlng 传入一个数组可以可以是度分或度分秒
-  * @returns {Number} 返回一个计算为度的数字
-  */
- static decodeLatlng(latlng){
-  latlng.reverse();
-  const result = latlng.reduce( ( prev , current , index , self ) => {
-    if( index == self.length -1 ) return prev += current;
-    prev += current / 60;
-    return prev;
-  } , 0);
-  return result;
- }
+   * 度分秒反算为度
+   * @param {[deg , minuite , second]} latlng 传入一个数组可以可以是度分或度分秒
+   * @returns {Number} 返回一个计算为度的数字
+   */
+  static decodeLatlng(latlng) {
+    latlng.reverse();
+    const result = latlng.reduce((prev, current, index, self) => {
+      if (index == self.length - 1) return prev += current;
+      prev += current / 60;
+      return prev;
+    }, 0);
+    return result;
+  }
+
+  /**
+   * 判断传入数据是否是空值
+   * @param {any} data 要判断的数据,( null , '' , empty , undefined )为空值
+   * @returns {Boolean} 返回一个布尔值 true 为不是空值 false 为空值
+   */
+  static ifEmpty(data) {
+    if (data === '' || data === null || data === undefined)
+      return false;
+    return true;
+  }
+
+  /**
+   * 数组对象判空
+   * @param {Array} data 要判空的数据，可以是数组或对象
+   * @param {Boolean} change 默认true返回去重空值的数据 传入false返回数据是否为全空值
+   * @returns {Array} 返回数组或对象，类型以传入数据为准 , 第二个参数为false则返回布尔值 true 为不是全空 或 空 ， false 为全空值
+   */
+  static ifEmptyObj(data, change = true) {
+    const type = Array.isArray(data);
+
+    // 数组判空
+    const ArrayHandle = () => { 
+       data = data.filter(item => {
+        return this.ifEmpty(item);
+      })
+      if (change) {
+        return data;
+      }
+      return data.length !== 0 ? true : false;
+    }
+
+    // 对象判空
+    const ObjHandle = () => {
+      const result = JSON.parse(JSON.stringify(data));
+      if( chagne ){
+        return result;
+      }
+      return Object.values(result).length == 0 ? false : true;
+    }
+
+    return type ? ArrayHandle() : ObjHandle();
+  }
 }
 
 /**
