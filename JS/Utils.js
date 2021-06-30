@@ -103,9 +103,9 @@ export class Fun extends Utils {
    * 函数防抖
    * @param callBack { Function }  延迟执行的回调函数
    * @param delay { Number } default:200 设定定时器的延迟执行时长 单位ms
-   * @param flag { Boolean } default:false false为首次触发不进行防抖处理
+   * @param flag { Boolean } default:true true为首次触发不进行防抖处理
    * */
-  static debounce(callBack, delay = 200, flag = false) {
+  static debounce(callBack, delay = 200, flag = true) {
     let timer = null;
     return function () {
       if (flag) {
