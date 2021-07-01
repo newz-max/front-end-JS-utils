@@ -91,6 +91,32 @@ export class Ustr extends Utils {
     if (type === 2) return `${hour}时${minute}分${second}秒`
     return [hour, minute, second];
   }
+
+  /**
+  * 传入一段字符串判断是否符合16进制
+  * @param {String} data 要判断的字符串
+  * @param {Boolean} flag 默认false 传入true返回对象{result : bool , hex : [0-9,a-f]};
+  * @returns {Boolean} 返回判断结果 true为符合规则
+  */
+  static hexadecimalRegex(data , flag=false){
+    const regex = /^[A-Fa-f0-9]{1,4}$/;
+    let result = {
+      hex : [],
+    };
+    const createHexadecimal = () => {
+      const {length} = new Array(15);
+      
+      for( let i = 0; i<= length; i++){
+        result.hex.push(i.toString(16));
+      }
+    }
+    if( flag ){
+      createHexadecimal();
+      result.result = regex.test(data);
+    }
+    if( !flag ) result = regex.test(data);    
+    return result;
+  }
 }
 
 // 函数操作类
