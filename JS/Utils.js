@@ -99,7 +99,7 @@ export class Ustr extends Utils {
   * @returns {Boolean} 返回判断结果 true为符合规则
   */
   static hexadecimalRegex(data , flag=false){
-    const regex = /^[A-Fa-f0-9]{1,4}$/;
+    const regex = /(^0x[a-f0-9]{1,2}$)|(^0X[A-F0-9]{1,2}$)|(^[A-F0-9]{1,2}$)|(^[a-f0-9]{1,2}$)/;
     let result = {
       hex : [],
     };
