@@ -12,6 +12,24 @@ export class Ustr extends Utils {
   }
 
   /**
+  * 创建指定长度的随机16进制字符串并返回
+  * @param {Number} length 指定返回字符串的长度
+  * @param {Boolean} hex 默认false 传入true返回字符串前面增加0x(包含在指定字符串长度内)
+  */
+  createHexadecimalStr(length , hex){
+    let result = '';
+    if( hex ) {
+      result = '0x';
+      length = length-2;
+    }
+    for( let i=0; i<=length; i++){
+      const randNum = Math.floor(Math.random() * 16);
+      result += (+randNum.toString(16));
+    }
+    return result;
+  }
+
+  /**
    * 递归获取字符串返回数组
    * @param str string 要截取的文本
    * @param intercept string 用于查询开始索引的字符串
