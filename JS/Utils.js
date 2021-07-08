@@ -266,50 +266,12 @@ export class Fun extends Utils {
 
   /**
    * 判断传入数据是否是空值
-   * @param {any} data 要判断的数据,( null , '' , empty , undefined )为空值
-   * @returns {Boolean} 返回一个布尔值 true 为不是空值 false 为空值
+   * @param {any} data 要判断的数据,( null , '' , empty , undefined , NaN  )为空值
+   * @returns {Boolean} 返回一个布尔值 true 为空值 false 不为空值
    */
   static ifEmpty(data) {
-    if (data === '' || data === null || data === undefined)
-      return false;
-    return true;
-  }
-
-  /**
-   * 数组对象判空
-   * @param {Array} data 要判空的数据，可以是数组或对象
-   * @param {String} index 传入索引可进行对指定索引的判空或二维数组的判空（对象不需要，essence to JSON.stringify）
-   * @param {Boolean} change 默认true返回去重空值的数据 传入false返回数据是否为全空值
-   * @returns {Array} 返回数组或对象，类型以传入数据为准 , 第二个参数为false则返回布尔值 true 为不是全空 或 空 ， false 为全空值
-   */
-  static ifEmptyObj(data, change = true, index = '') {
-    const type = Array.isArray(data);
-
-    // 数组判空
-    const ArrayHandle = () => {
-      if (index !== '')
-        data = data[index].filter(item => {
-          return this.ifEmpty(item);
-        })
-
-      if (attribute === '')
-        data = data.filter(item => {
-          return this.ifEmpty(item);
-        })
-
-        return change ? data : data.length !== 0 ? true : false;
-    }
-
-    // 对象判空
-    const ObjHandle = () => {
-      const result = JSON.parse(JSON.stringify(data));
-      if (chagne) {
-        return result;
-      }
-      return Object.values(result).length == 0 ? false : true;
-    }
-
-    return type ? ArrayHandle() : ObjHandle();
+    const filterData = ['' , null , undefined , NaN];
+    return filterData.includes(data)
   }
 }
 
