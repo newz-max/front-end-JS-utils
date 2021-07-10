@@ -16,7 +16,7 @@ export class Ustr extends Utils {
   * @param {Number} length 指定返回字符串的长度
   * @param {Boolean} hex 默认false 传入true返回字符串前面增加0x(包含在指定字符串长度内)
   */
-  createHexadecimalStr(length , hex){
+  static createHexadecimalStr(length , hex){
     let result = '';
     if( hex ) {
       result = '0x';
