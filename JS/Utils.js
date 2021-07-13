@@ -16,7 +16,7 @@ export class Ustr extends Utils {
   * @param {Number} length 指定返回字符串的长度
   * @param {Boolean} hex 默认false 传入true返回字符串前面增加0x(包含在指定字符串长度内)
   */
-  createHexadecimalStr(length , hex){
+  static createHexadecimalStr(length , hex){
     let result = '';
     if( hex ) {
       result = '0x';
@@ -68,6 +68,13 @@ export class Ustr extends Utils {
    * */
   static calcDate(timeStamp, time = "no", type = "1") {
     const year = new Date(timeStamp).getFullYear();
+    /**
+    * 判断时分秒是否小于10添加0
+    */
+   const enCodeTime = (val) => {
+    return val > 10 ? `0${val}` : val;
+   }
+    
     let month = new Date(timeStamp).getMonth() + 1;
     let day = new Date(timeStamp).getDate();
     if (month < 10) month = `0${month}`;
@@ -81,8 +88,8 @@ export class Ustr extends Utils {
       hours = new Date(timeStamp).getHours();
       minutes = new Date(timeStamp).getMinutes();
       seconds = new Date(timeStamp).getSeconds();
-      if (type == 1) timeResult += `${hours}:${minutes}:${seconds}`;
-      if (type == 2) timeResult += `${hours}时${minutes}分${seconds}秒`;
+      if (type == 1) timeResult += `${enCodeTime(hours)}:${enCodeTime(minutes)}:${enCodeTime(seconds)}`;
+      if (type == 2) timeResult += `${enCodeTime(hours)}时${enCodeTime(minutes)}分${enCodeTime(seconds)}秒`;
     }
     if (type == 1) dateResult += `${year}-${month}-${day}  ${timeResult}`;
     if (type == 2) dateResult += `${year}年${month}月${day}日  ${timeResult}`;
@@ -266,50 +273,12 @@ export class Fun extends Utils {
 
   /**
    * 判断传入数据是否是空值
-   * @param {any} data 要判断的数据,( null , '' , empty , undefined )为空值
-   * @returns {Boolean} 返回一个布尔值 true 为不是空值 false 为空值
+   * @param {any} data 要判断的数据,( null , '' , empty , undefined , NaN  )为空值
+   * @returns {Boolean} 返回一个布尔值 true 为空值 false 不为空值
    */
   static ifEmpty(data) {
-    if (data === '' || data === null || data === undefined)
-      return false;
-    return true;
-  }
-
-  /**
-   * 数组对象判空
-   * @param {Array} data 要判空的数据，可以是数组或对象
-   * @param {String} index 传入索引可进行对指定索引的判空或二维数组的判空（对象不需要，essence to JSON.stringify）
-   * @param {Boolean} change 默认true返回去重空值的数据 传入false返回数据是否为全空值
-   * @returns {Array} 返回数组或对象，类型以传入数据为准 , 第二个参数为false则返回布尔值 true 为不是全空 或 空 ， false 为全空值
-   */
-  static ifEmptyObj(data, change = true, index = '') {
-    const type = Array.isArray(data);
-
-    // 数组判空
-    const ArrayHandle = () => {
-      if (index !== '')
-        data = data[index].filter(item => {
-          return this.ifEmpty(item);
-        })
-
-      if (attribute === '')
-        data = data.filter(item => {
-          return this.ifEmpty(item);
-        })
-
-        return change ? data : data.length !== 0 ? true : false;
-    }
-
-    // 对象判空
-    const ObjHandle = () => {
-      const result = JSON.parse(JSON.stringify(data));
-      if (chagne) {
-        return result;
-      }
-      return Object.values(result).length == 0 ? false : true;
-    }
-
-    return type ? ArrayHandle() : ObjHandle();
+    const filterData = ['' , null , undefined , NaN];
+    return filterData.includes(data)
   }
 }
 
