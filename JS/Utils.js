@@ -72,7 +72,7 @@ export class Ustr extends Utils {
     * 判断时分秒是否小于10添加0
     */
    const enCodeTime = (val) => {
-    return val > 10 ? `0${val}` : val;
+    return val < 10 ? `0${val}` : val;
    }
     
     let month = new Date(timeStamp).getMonth() + 1;
