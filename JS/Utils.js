@@ -221,8 +221,8 @@ export class Fun extends Utils {
     if (lat < 0) direction.lat = 'S'; // 南纬
     if (lng < 0) direction.lng = 'W'; // 西经
     // 得到度
-    const la = Math.floor(lat);
-    const ln = Math.floor(lng);
+    const la = Math.abs(Math.floor(lat));
+    const ln = Math.abs(Math.floor(lng));
     // 计算分的包含小数结果
     const laTemp = Math.abs((lat - la) * 60);
     const lnTemp = Math.abs((lng - ln) * 60);
@@ -249,8 +249,8 @@ export class Fun extends Utils {
     }
     if (!deCode) {
       result = {
-        lat: `${la}°${laMinutes}.${laSeconds}' ${direction.lat}`,
-        lng: `${ln}°${lnMinutes}.${lnSeconds}' ${direction.lng}`,
+        lat: `${la}°${laMinutes}.${laSeconds}'${direction.lat}`,
+        lng: `${ln}°${lnMinutes}.${lnSeconds}'${direction.lng}`,
       }
     }
     return result;
