@@ -224,14 +224,14 @@ export class Fun extends Utils {
     const la = Math.floor(lat);
     const ln = Math.floor(lng);
     // 计算分的包含小数结果
-    const laTemp = (lat - la) * 60;
-    const lnTemp = (lng - ln) * 60;
+    const laTemp = Math.abs((lat - la) * 60);
+    const lnTemp = Math.abs((lng - ln) * 60);
     // 得到分
-    const laMinutes = Math.round(laTemp);
-    const lnMinutes = Math.round(lnTemp);
+    const laMinutes = Math.abs(Math.round(laTemp));
+    const lnMinutes = Math.abs(Math.round(lnTemp));
     // 得到秒
-    const laSeconds = Math.round((laTemp - laMinutes) * 60);
-    const lnSeconds = Math.round((lnTemp - lnMinutes) * 60);
+    const laSeconds = Math.abs(Math.round((laTemp - laMinutes) * 60));
+    const lnSeconds = Math.abs(Math.round((lnTemp - lnMinutes) * 60));
     let result;
     if (deCode) {
       result = {
