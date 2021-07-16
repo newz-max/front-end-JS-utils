@@ -1,8 +1,5 @@
 class Utils {
-  constructor() {
-
-  }
-
+  constructor() {}
 }
 
 // 字符串操作类
@@ -12,19 +9,19 @@ export class Ustr extends Utils {
   }
 
   /**
-  * 创建指定长度的随机16进制字符串并返回
-  * @param {Number} length 指定返回字符串的长度
-  * @param {Boolean} hex 默认false 传入true返回字符串前面增加0x(包含在指定字符串长度内)
-  */
-  static createHexadecimalStr(length , hex){
-    let result = '';
-    if( hex ) {
-      result = '0x';
-      length = length-2;
+   * 创建指定长度的随机16进制字符串并返回
+   * @param {Number} length 指定返回字符串的长度
+   * @param {Boolean} hex 默认false 传入true返回字符串前面增加0x(包含在指定字符串长度内)
+   */
+  static createHexadecimalStr(length, hex) {
+    let result = "";
+    if (hex) {
+      result = "0x";
+      length = length - 2;
     }
-    for( let i=0; i<=length; i++){
+    for (let i = 0; i <= length; i++) {
       const randNum = Math.floor(Math.random() * 16);
-      result += (+randNum.toString(16));
+      result += +randNum.toString(16);
     }
     return result;
   }
@@ -69,12 +66,12 @@ export class Ustr extends Utils {
   static calcDate(timeStamp, time = "no", type = "1") {
     const year = new Date(timeStamp).getFullYear();
     /**
-    * 判断时分秒是否小于10添加0
-    */
-   const enCodeTime = (val) => {
-    return val < 10 ? `0${val}` : val;
-   }
-    
+     * 判断时分秒是否小于10添加0
+     */
+    const enCodeTime = (val) => {
+      return val < 10 ? `0${val}` : val;
+    };
+
     let month = new Date(timeStamp).getMonth() + 1;
     let day = new Date(timeStamp).getDate();
     if (month < 10) month = `0${month}`;
@@ -88,8 +85,14 @@ export class Ustr extends Utils {
       hours = new Date(timeStamp).getHours();
       minutes = new Date(timeStamp).getMinutes();
       seconds = new Date(timeStamp).getSeconds();
-      if (type == 1) timeResult += `${enCodeTime(hours)}:${enCodeTime(minutes)}:${enCodeTime(seconds)}`;
-      if (type == 2) timeResult += `${enCodeTime(hours)}时${enCodeTime(minutes)}分${enCodeTime(seconds)}秒`;
+      if (type == 1)
+        timeResult += `${enCodeTime(hours)}:${enCodeTime(minutes)}:${enCodeTime(
+          seconds
+        )}`;
+      if (type == 2)
+        timeResult += `${enCodeTime(hours)}时${enCodeTime(
+          minutes
+        )}分${enCodeTime(seconds)}秒`;
     }
     if (type == 1) dateResult += `${year}-${month}-${day}  ${timeResult}`;
     if (type == 2) dateResult += `${year}年${month}月${day}日  ${timeResult}`;
@@ -113,33 +116,33 @@ export class Ustr extends Utils {
     let second = MyDate.getSeconds();
     second = second < 10 ? `0${second}` : second;
     if (type === 1) return `${hour}:${minute}:${second}`;
-    if (type === 2) return `${hour}时${minute}分${second}秒`
+    if (type === 2) return `${hour}时${minute}分${second}秒`;
     return [hour, minute, second];
   }
 
   /**
-  * 传入一段字符串判断是否符合16进制
-  * @param {String} data 要判断的字符串
-  * @param {Boolean} flag 默认false 传入true返回对象{result : bool , hex : [0-9,a-f]};
-  * @returns {Boolean} 返回判断结果 true为符合规则
-  */
-  static hexadecimalRegex(data , flag=false){
+   * 传入一段字符串判断是否符合16进制
+   * @param {String} data 要判断的字符串
+   * @param {Boolean} flag 默认false 传入true返回对象{result : bool , hex : [0-9,a-f]};
+   * @returns {Boolean} 返回判断结果 true为符合规则
+   */
+  static hexadecimalRegex(data, flag = false) {
     const regex = /^0x([a-fA-F0-9])*$|^[a-fA-F0-9]+$/;
     let result = {
-      hex : [],
+      hex: [],
     };
     const createHexadecimal = () => {
-      const {length} = new Array(15);
-      
-      for( let i = 0; i<= length; i++){
+      const { length } = new Array(15);
+
+      for (let i = 0; i <= length; i++) {
         result.hex.push(i.toString(16));
       }
-    }
-    if( flag ){
+    };
+    if (flag) {
       createHexadecimal();
       result.result = regex.test(data);
     }
-    if( !flag ) result = regex.test(data);    
+    if (!flag) result = regex.test(data);
     return result;
   }
 }
@@ -205,21 +208,18 @@ export class Fun extends Utils {
    * 经纬度编码，度转换为度分秒,南北纬东西经的判断基于传入数值的正负值，北纬及东经为正数，反之亦然
    * @param {{lat : 00.00000000 , lng : 00.000000 }} latlng 传入经纬度对象
    * @param {Boolean} deCode 默认false 传入true返回无度数分秒拼接的对象 返回{lat : {deg : xxx , minutes : xxx , seconds} , lng : {xxx}}
-   * @returns {{lat : 'xxx' , lng : 'xxx'}} 返回编码后的经纬度对象 
+   * @returns {{lat : 'xxx' , lng : 'xxx'}} 返回编码后的经纬度对象
    */
   static encodeLatlng(latlng, deCode = false) {
-    const {
-      lat,
-      lng
-    } = latlng;
+    const { lat, lng } = latlng;
 
     // 判断南北纬和东西经
     const direction = {
-      lat: 'N', // 北纬
-      lng: 'E', // 东经
+      lat: "N", // 北纬
+      lng: "E", // 东经
     };
-    if (lat < 0) direction.lat = 'S'; // 南纬
-    if (lng < 0) direction.lng = 'W'; // 西经
+    if (lat < 0) direction.lat = "S"; // 南纬
+    if (lng < 0) direction.lng = "W"; // 西经
     // 得到度
     const la = Math.abs(Math.floor(lat));
     const ln = Math.abs(Math.floor(lng));
@@ -244,14 +244,14 @@ export class Fun extends Utils {
           deg: ln,
           minutes: lnMinutes,
           seconds: lnSeconds,
-        }
-      }
+        },
+      };
     }
     if (!deCode) {
       result = {
         lat: `${la}°${laMinutes}.${laSeconds}'${direction.lat}`,
         lng: `${ln}°${lnMinutes}.${lnSeconds}'${direction.lng}`,
-      }
+      };
     }
     return result;
   }
@@ -264,11 +264,24 @@ export class Fun extends Utils {
   static decodeLatlng(latlng) {
     latlng.reverse();
     const result = latlng.reduce((prev, current, index, self) => {
-      if (index == self.length - 1) return prev += current;
+      if (index == self.length - 1) return (prev += current);
       prev += current / 60;
       return prev;
     }, 0);
     return result;
+  }
+
+  /**
+   * 截取字符串中度分秒并返回
+   * @param {String} 要截取的字符串
+   * @returns {Array} 返回数组[度，分，秒]
+   */
+  static interceptLatlng(latlng) {
+    const numberRegex = /(^[\-]){0,1}[A-Z][0-9]{1,}/g;
+    const letterRegex = /[A-Za-z]/g;
+    const number = latlng.match(numberRegex);
+    const letter = latlng.match(letterRegex);
+    console.log(number, letter);
   }
 
   /**
@@ -277,13 +290,13 @@ export class Fun extends Utils {
    * @returns {Boolean} 返回一个布尔值 true 为空值 false 不为空值
    */
   static ifEmpty(data) {
-    const filterData = ['' , null , undefined , NaN];
-    return filterData.includes(data)
+    const filterData = ["", null, undefined, NaN];
+    return filterData.includes(data);
   }
 }
 
 /**
- * 简化javaScript一些API的使用  
+ * 简化javaScript一些API的使用
  */
 export class Japi extends Utils {
   constructor() {
@@ -296,9 +309,9 @@ export class Japi extends Utils {
    * @param value {any} 设置值，非字符串会自动转换为字符串
    */
   static localSet(key, value) {
-    if (typeof key !== 'string') key = JSON.stringify(key);
-    if (typeof value !== 'string') value = JSON.stringify(value);
-    localStorage.setItem(key, value)
+    if (typeof key !== "string") key = JSON.stringify(key);
+    if (typeof value !== "string") value = JSON.stringify(value);
+    localStorage.setItem(key, value);
   }
 
   /**
@@ -315,17 +328,48 @@ export class Japi extends Utils {
   /**
    * 简化Object.property.toString.call()的使用
    * @param {any} data 传入任意类型数据，返回对应类型
-   * @param {Boolean} whole 默认false，返回字符串截取过的结果，传入true，返回toString的正常结果 
+   * @param {Boolean} whole 默认false，返回字符串截取过的结果，传入true，返回toString的正常结果
    * @returns {String} 默认返回数据对应类型字符串 实例：Array
    */
   static getDataType(data, whole = false) {
     const jsType = Object.prototype.toString.call(data);
     if (whole) return jsType;
-    const {
-      length
-    } = jsType;
+    const { length } = jsType;
     const type = jsType.slice(8, length - 1);
     return type;
+  }
+}
+
+/**
+ * 复杂计算类Complex Calc
+ */
+export class CC extends Utils {
+  /**
+   * 计算多边形面积
+   * @param {Array} calcArr 要计算的多边形x，y轴坐标 格式 : [[x,y] , [x,y]]
+   * @return {Number} 返回一个计算得出的数字结果
+   */
+  calcPolygonArea(calcArr) {
+    const tempArr = calcArr.map((item) => {
+      item = item.map((item) => Math.abs(item));
+      return { x: item[0], y: item[1] };
+    });
+
+    /**
+    * 计算面积
+    */
+    const result = tempArr.reduce(
+      (prev, current) => {
+        // 首次循环初始化prev
+        prev.x = current.x;
+        prev.y = current.y;
+        prev.result += prev.x * current.y;
+        prev.result -= prev.y * current.x;
+        return (prev.rseult / 2);
+      },
+      { result: 0 }
+    );
+    return result;
   }
 }
 
@@ -334,4 +378,4 @@ export default {
   Ustr,
   Fun,
   Japi,
-}
+};
