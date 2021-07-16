@@ -1,6 +1,6 @@
 {
   "name": "front-end-js-utils",
-  "version": "1.5.4",
+  "version": "1.5.5",
   "description": "front end Utils",
   "main": "./JS/Utils.js",
   "scripts": {
