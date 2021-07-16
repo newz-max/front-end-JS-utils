@@ -373,7 +373,7 @@ export class CC extends Utils {
       },
       { result: 0 }
     );
-    return result;
+    return Math.abs(result);
   }
 }
 
