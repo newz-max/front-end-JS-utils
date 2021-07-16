@@ -344,7 +344,7 @@ export class Japi extends Utils {
  * 复杂计算类Complex Calc
  */
 export class CC extends Utils {
-  constructor(){
+  constructor() {
     super();
   }
   /**
@@ -354,21 +354,25 @@ export class CC extends Utils {
    */
   static calcPolygonArea(calcArr) {
     const tempArr = calcArr.map((item) => {
-      item = item.map(item => Math.abs(item));
+      item = item.map((item) => Math.abs(item));
       return { x: item[0], y: item[1] };
     });
 
     /**
-    * 计算面积
-    */
+     * 计算面积
+     */
+    let result;
+    for (let i = 0; i < tempArr.length; i++) {
+      
+    }
     const result = tempArr.reduce(
-      (prev, current , index , self ) => {
+      (prev, current, index, self) => {
         // 首次循环初始化prev
-        prev.x = current.x;
-        prev.y = current.y;
+        if (index === self.length - 1) return prev.result / 2;
+        prev.x = self[index+1].x;
+        prev.y = self[index+1].y;
         prev.result += prev.x * current.y;
         prev.result -= prev.y * current.x;
-        if( index === self.length -1 ) return (prev.result / 2);
         return prev;
       },
       { result: 0 }
