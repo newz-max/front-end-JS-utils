@@ -361,16 +361,12 @@ export class CC extends Utils {
     /**
      * 计算面积
      */
-    let result;
-    for (let i = 0; i < tempArr.length; i++) {
-      
-    }
     const result = tempArr.reduce(
       (prev, current, index, self) => {
         // 首次循环初始化prev
         if (index === self.length - 1) return prev.result / 2;
-        prev.x = self[index+1].x;
-        prev.y = self[index+1].y;
+        prev.x = self[index + 1].x;
+        prev.y = self[index + 1].y;
         prev.result += prev.x * current.y;
         prev.result -= prev.y * current.x;
         return prev;
