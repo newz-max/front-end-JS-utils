@@ -349,7 +349,7 @@ export class CC extends Utils {
    * @param {Array} calcArr 要计算的多边形x，y轴坐标 格式 : [[x,y] , [x,y]]
    * @return {Number} 返回一个计算得出的数字结果
    */
-  calcPolygonArea(calcArr) {
+  static calcPolygonArea(calcArr) {
     const tempArr = calcArr.map((item) => {
       item = item.map((item) => Math.abs(item));
       return { x: item[0], y: item[1] };
