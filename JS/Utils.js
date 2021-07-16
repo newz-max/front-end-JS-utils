@@ -344,6 +344,9 @@ export class Japi extends Utils {
  * 复杂计算类Complex Calc
  */
 export class CC extends Utils {
+  constructor(){
+    super();
+  }
   /**
    * 计算多边形面积
    * @param {Array} calcArr 要计算的多边形x，y轴坐标 格式 : [[x,y] , [x,y]]
@@ -378,4 +381,5 @@ export default {
   Ustr,
   Fun,
   Japi,
+  CC,
 };
