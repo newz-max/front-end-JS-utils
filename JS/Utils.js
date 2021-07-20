@@ -157,7 +157,7 @@ export class Fun extends Utils {
    * 函数防抖
    * @param callBack { Function }  延迟执行的回调函数
    * @param delay { Number } default:200 设定定时器的延迟执行时长 单位ms
-   * @param flag { Boolean } default:true true为首次触发不进行防抖处理
+   * @param flag { Boolean } default:true false为首次触发不进行防抖处理
    * */
   static debounce(callBack, delay = 200, flag = true) {
     let timer = null;
@@ -350,9 +350,10 @@ export class CC extends Utils {
   /**
    * 计算多边形面积
    * @param {Array} calcArr 要计算的多边形x，y轴坐标 格式 : [[x,y] , [x,y]]
-   * @return {Number} 返回一个计算得出的数字结果
+   * @return {Number} 返回一个计算得出的数字结果（传入子级为对象时将返回）
    */
   static calcPolygonArea(calcArr) {
+    if( !objFlag )
     const tempArr = calcArr.map((item) => {
       item = item.map((item) => Math.abs(item));
       return { x: item[0], y: item[1] };
