@@ -352,30 +352,30 @@ export class CC extends Utils {
    * @param {Array} calcArr 要计算的多边形x，y轴坐标 格式 : [[x,y] , [x,y]]
    * @return {Number} 返回一个计算得出的数字结果（传入子级为对象时将返回）
    */
-  static calcPolygonArea(calcArr) {
-    if( !objFlag )
-    const tempArr = calcArr.map((item) => {
-      item = item.map((item) => Math.abs(item));
-      return { x: item[0], y: item[1] };
-    });
+  // static calcPolygonArea(calcArr) {
+  //   if( !objFlag )
+  //   const tempArr = calcArr.map((item) => {
+  //     item = item.map((item) => Math.abs(item));
+  //     return { x: item[0], y: item[1] };
+  //   });
 
-    /**
-     * 计算面积
-     */
-    const result = tempArr.reduce(
-      (prev, current, index, self) => {
-        // 首次循环初始化prev
-        if (index === self.length - 1) return prev.result / 2;
-        prev.x = self[index + 1].x;
-        prev.y = self[index + 1].y;
-        prev.result += prev.x * current.y;
-        prev.result -= prev.y * current.x;
-        return prev;
-      },
-      { result: 0 }
-    );
-    return Math.abs(result);
-  }
+  //   /**
+  //    * 计算面积
+  //    */
+  //   const result = tempArr.reduce(
+  //     (prev, current, index, self) => {
+  //       // 首次循环初始化prev
+  //       if (index === self.length - 1) return prev.result / 2;
+  //       prev.x = self[index + 1].x;
+  //       prev.y = self[index + 1].y;
+  //       prev.result += prev.x * current.y;
+  //       prev.result -= prev.y * current.x;
+  //       return prev;
+  //     },
+  //     { result: 0 }
+  //   );
+  //   return Math.abs(result);
+  // }
 }
 
 export default {
