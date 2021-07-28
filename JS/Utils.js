@@ -215,15 +215,18 @@ export class Fun extends Utils {
 
     /**
      * 返回 1 += 小数长度位的数字
-    * @param 经纬度
-    * @return 1后n个0
-    */
+     * @param 经纬度
+     * @return 1后n个0
+     */
     const calcDecimalLenght = (num) => {
-      return `${num}`.split('.')[1].split('').reduce( prev => {
-        prev += '0';
-        return prev;
-      } , '1')
-    }
+      return `${num}`
+        .split(".")[1]
+        .split("")
+        .reduce((prev) => {
+          prev += "0";
+          return prev;
+        }, "1");
+    };
 
     // 判断南北纬和东西经
     const direction = {
@@ -236,20 +239,39 @@ export class Fun extends Utils {
     // 得出小数需乘入倍数
     const latBaseNum = calcDecimalLenght(lat);
     const lngBaseNum = calcDecimalLenght(lng);
-    
-    
+
     // 得到度
-    const la = Math.abs(Math.floor(lat));
-    const ln = Math.abs(Math.floor(lng));
+    const la = Math.floor(Math.abs(lat));
+    const ln = Math.floor(Math.abs(lng));
     // 计算分的包含小数结果
-    const laTemp = Math.abs((lat - la) * latBaseNum * 60 / latBaseNum);
-    const lnTemp = Math.abs((lng - ln) * lngBaseNum * 60 / lngBaseNum);
+    const laTemp = Math.abs(
+      (((Math.abs(lat) * latBaseNum - la * latBaseNum) / latBaseNum) *
+        latBaseNum *
+        60) /
+        latBaseNum
+    );
+    const lnTemp = Math.abs(
+      (((Math.abs(lng) * lngBaseNum - ln * lngBaseNum) / lngBaseNum) *
+        lngBaseNum *
+        60) /
+        lngBaseNum
+    );
     // 得到分
-    const laMinutes = Math.abs(Math.round(laTemp));
-    const lnMinutes = Math.abs(Math.round(lnTemp));
+    const laMinutes = Math.abs(Math.floor(laTemp));
+    const lnMinutes = Math.abs(Math.floor(lnTemp));
     // 得到秒
-    const laSeconds = Math.abs(Math.round((laTemp - laMinutes) * 60));
-    const lnSeconds = Math.abs(Math.round((lnTemp - lnMinutes) * 60));
+    const laTempLength = calcDecimalLenght(laTemp);
+    const lnTempLength = calcDecimalLenght(lnTemp);
+    const laSeconds = Math.abs(
+      Math.floor(
+        ((laTemp * laTempLength - laMinutes * laTempLength) / laTempLength) * 60
+      )
+    );
+    const lnSeconds = Math.abs(
+      Math.floor(
+        ((lnTemp * lnTempLength - lnMinutes * lnTempLength) / lnTempLength) * 60
+      )
+    );
     let result;
     if (deCode) {
       result = {
@@ -273,7 +295,6 @@ export class Fun extends Utils {
     }
     return result;
   }
-
   /**
    * 度分秒反算为度
    * @param {[deg , minuite , second]} latlng 传入一个数组可以可以是度分或度分秒
