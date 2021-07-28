@@ -213,6 +213,18 @@ export class Fun extends Utils {
   static encodeLatlng(latlng, deCode = false) {
     const { lat, lng } = latlng;
 
+    /**
+     * 返回 1 += 小数长度位的数字
+    * @param 经纬度
+    * @return 1后n个0
+    */
+    const calcDecimalLenght = (num) => {
+      return `${num}`.split('.')[1].split('').reduce( prev => {
+        prev += '0';
+        return prev;
+      } , '1')
+    }
+
     // 判断南北纬和东西经
     const direction = {
       lat: "N", // 北纬
@@ -220,12 +232,18 @@ export class Fun extends Utils {
     };
     if (lat < 0) direction.lat = "S"; // 南纬
     if (lng < 0) direction.lng = "W"; // 西经
+
+    // 得出小数需乘入倍数
+    const latBaseNum = calcDecimalLenght(lat);
+    const lngBaseNum = calcDecimalLenght(lng);
+    
+    
     // 得到度
     const la = Math.abs(Math.floor(lat));
     const ln = Math.abs(Math.floor(lng));
     // 计算分的包含小数结果
-    const laTemp = Math.abs((lat - la) * 60);
-    const lnTemp = Math.abs((lng - ln) * 60);
+    const laTemp = Math.abs((lat - la) * latBaseNum * 60 / latBaseNum);
+    const lnTemp = Math.abs((lng - ln) * lngBaseNum * 60 / lngBaseNum);
     // 得到分
     const laMinutes = Math.abs(Math.round(laTemp));
     const lnMinutes = Math.abs(Math.round(lnTemp));
