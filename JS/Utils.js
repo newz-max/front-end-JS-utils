@@ -21,7 +21,7 @@ export class Ustr extends Utils {
     }
     for (let i = 0; i <= length; i++) {
       const randNum = Math.floor(Math.random() * 16);
-      result += +randNum.toString(16);
+      result += randNum.toString(16);
     }
     return result;
   }
