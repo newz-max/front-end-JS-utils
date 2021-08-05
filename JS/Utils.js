@@ -393,17 +393,16 @@ export class CC extends Utils {
    * @returns 返回一个对象 : {tl : xx , rb} (tl：左上点坐标，rb：右下点坐标)
    */
   static domPosition(dom) {
-    const {
-      offsetWidth: dw,
-      offsetHeight: dh,
-      offsetTop: dt,
-      offsetLeft: dl,
-    } = dom;
-    const {offsetHeight:bh , offsetWidth:bw} = document.body;
-    const tl = {y : bh - dt , x : dl};
-    const rb = { y : bh - dt - dh , x : bw - dl - dw};
+    const { left, top, right, bottom } = dom.getBoundingClientRect();
     const result = {
-      tl,rb
+      tl: {
+        x: left,
+        y: top,
+      },
+      rb: {
+        x: right,
+        y: bottom,
+      },
     };
     return result;
   }
