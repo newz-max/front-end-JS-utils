@@ -386,6 +386,28 @@ export class CC extends Utils {
   constructor() {
     super();
   }
+
+  /**
+   * 计算DOM元素所在坐标(通过body宽高计算出结果)
+   * @params {DOM} dom 传入要计算坐标的dom
+   * @returns 返回一个对象 : {tl : xx , rb} (tl：左上点坐标，rb：右下点坐标)
+   */
+  static domPosition(dom) {
+    const {
+      offsetWidth: dw,
+      offsetHeight: dh,
+      offsetTop: dt,
+      offsetLeft: dl,
+    } = dom;
+    const {offsetHeight:bh , offsetWidth:bw} = document.body;
+    const tl = {y : bh - dt , x : dl};
+    const rb = { y : bh - dt - dh , x : bw - dl - dw};
+    const result = {
+      tl,rb
+    };
+    return result;
+  }
+
   /**
    * 计算多边形面积
    * @param {Array} calcArr 要计算的多边形x，y轴坐标 格式 : [[x,y] , [x,y]]
