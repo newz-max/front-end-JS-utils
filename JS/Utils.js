@@ -438,8 +438,11 @@ export class CC extends Utils {
      * 获取浮点数长度
      */
     const getFloatLength = (num) => {
-      return `${num}`.split(".")[1].length;
+      const str = `${num}`.split(".")[1];
+      if (str === undefined) return 0;
+      return str.length;
     };
+    
     const calcSet = {
       /**
        * 加法计算
