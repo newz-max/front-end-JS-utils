@@ -205,6 +205,22 @@ export class Fun extends Utils {
   }
 
   /**
+   * 返回小数转整数的结果
+   * @param {Number} num 传入一个小数
+   * @return 返回一个对象 {result : xxx , num : xxx} result 为小数的结果
+   */
+  static calcDecimalLenght(num) {
+    const intResult = `${num}`
+      .split(".")[1]
+      .split("")
+      .reduce((prev) => {
+        prev += "0";
+        return prev;
+      }, "1");
+    return { result: num * intResult, num: intResult };
+  }
+
+  /**
    * 经纬度编码，度转换为度分秒,南北纬东西经的判断基于传入数值的正负值，北纬及东经为正数，反之亦然
    * @param {{lat : 00.00000000 , lng : 00.000000 }} latlng 传入经纬度对象
    * @param {Boolean} deCode 默认false 传入true返回无度数分秒拼接的对象 返回{lat : {deg : xxx , minutes : xxx , seconds} , lng : {xxx}}
@@ -233,6 +249,7 @@ export class Fun extends Utils {
       lat: "N", // 北纬
       lng: "E", // 东经
     };
+
     if (lat < 0) direction.lat = "S"; // 南纬
     if (lng < 0) direction.lng = "W"; // 西经
 
@@ -301,12 +318,13 @@ export class Fun extends Utils {
    * @returns {Number} 返回一个计算为度的数字
    */
   static decodeLatlng(latlng) {
-    latlng.reverse();
     const result = latlng.reduce((prev, current, index, self) => {
-      if (index == self.length - 1) return (prev += current);
-      prev += current / 60;
+      current = Number(current);
+      let calcM = 60;
+      if (index === 1) calcM = 3600;
+      prev = CC.calcFloat([prev, current / calcM], "addition");
       return prev;
-    }, 0);
+    }, latlng.splice(0, 1));
     return result;
   }
 
@@ -404,6 +422,37 @@ export class CC extends Utils {
         y: bottom,
       },
     };
+    return result;
+  }
+
+  /**
+   * 浮点数计算（目前仅支持两个数字的计算）
+   * @param {Array} numbers 要计算的数字：[number1 , number2]
+   * @param {String} type 计算类型 加 : addition
+   */
+  static calcFloat(numbers, type) {
+    const n1 = Number(numbers[0]);
+    const n2 = Number(numbers[1]);
+
+    /**
+     * 获取浮点数长度
+     */
+    const getFloatLength = (num) => {
+      return `${num}`.split(".")[1].length;
+    };
+    const calcSet = {
+      /**
+       * 加法计算
+       */
+      addition(n1, n2) {
+        const n1Length = getFloatLength(n1);
+        const n2Length = getFloatLength(n2);
+        const m = Math.pow(10, Math.max(n1Length, n2Length));
+        return (n1 * m + n2 * m) / m;
+      },
+    };
+
+    const result = calcSet[type](n1, n2);
     return result;
   }
 
