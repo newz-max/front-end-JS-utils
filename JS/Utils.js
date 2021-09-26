@@ -161,7 +161,7 @@ export class Fun extends Utils {
   static deCodeDate(dateStr) {
     let timestamp;
     try {
-      tempstamp = new Date(dateStr).getTime();
+      timestamp = new Date(dateStr).getTime();
     } catch (err) {
       throw new Error("格式不支持");
     }
