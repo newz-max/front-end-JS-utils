@@ -154,6 +154,21 @@ export class Fun extends Utils {
   }
 
   /**
+   * 字符串日期转换为时间戳
+   * @param {String} dateStr  字符串日期
+   * @return {Number} 转换为时间戳的日期
+   */
+  static deCodeDate(dateStr) {
+    let timestamp;
+    try {
+      tempstamp = new Date(dateStr).getTime();
+    } catch (err) {
+      throw new Error("格式不支持");
+    }
+    return timestamp;
+  }
+
+  /**
    * 函数防抖
    * @param callBack { Function }  延迟执行的回调函数
    * @param delay { Number } default:200 设定定时器的延迟执行时长 单位ms
@@ -442,7 +457,7 @@ export class CC extends Utils {
       if (str === undefined) return 0;
       return str.length;
     };
-    
+
     const calcSet = {
       /**
        * 加法计算
