@@ -250,7 +250,7 @@ export class Fun extends Utils {
      * @return 1后n个0
      */
     const calcDecimalLenght = (num) => {
-      if (num === 0) return 10;
+      if (num === 0 || ~~num === num) return 10;
       
       const result = `${num}`
         .split(".")[1]
