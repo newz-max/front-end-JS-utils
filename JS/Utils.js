@@ -250,13 +250,16 @@ export class Fun extends Utils {
      * @return 1后n个0
      */
     const calcDecimalLenght = (num) => {
-      return `${num}`
+      if (num === 0) return 10;
+      
+      const result = `${num}`
         .split(".")[1]
         .split("")
         .reduce((prev) => {
           prev += "0";
           return prev;
         }, "1");
+      return result;
     };
 
     // 判断南北纬和东西经
